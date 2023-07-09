@@ -19,7 +19,7 @@ pipeline{
                 sh "docker build -t kiran023/amazon:v1 ."
             }
         }
-		stage("docker build"){
+		stage("docker run"){
             steps{
                 sh "docker run -dp 9091:8080 --name amazon kiran023/amazon:v1"
             }

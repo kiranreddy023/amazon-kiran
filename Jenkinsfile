@@ -9,10 +9,20 @@ pipeline{
 				sh "mvn clean package -DskipTests=true"
 			}
 		}
-		 stage("mvn test"){
-                        steps{
-                                sh "mvn test"
-                        }
-                }			
+		stage("mvn test"){
+            steps{
+                sh "mvn test"
+            }
+        }
+		stage("docker build"){
+            steps{
+                sh "docker build -t kiran023/amazon:v1 ."
+            }
+        }
+		stage("docker build"){
+            steps{
+                sh "docker run -dp 9091:8080 --name amazon kiran023/amazon:v1"
+            }
+        }				
 	}
 }

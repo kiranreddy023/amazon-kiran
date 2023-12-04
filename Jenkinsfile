@@ -38,11 +38,11 @@ pipeline{
         stage('Build Docker Image') {
             steps {
                 // Define the Dockerfile path
-                def dockerfilePath = "."
+              
 
                 // Build the Docker image
                 script {
-                    dockerImage = docker.build("kiran023/amazon:latest", "-f ${dockerfilePath} .")
+                    dockerImage = docker.build("kiran023/amazon:latest", "-f .")
                 }
             }
         }

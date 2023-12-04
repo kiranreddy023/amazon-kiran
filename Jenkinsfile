@@ -42,9 +42,9 @@ pipeline{
         }
         stage('dockerbuild'){
             steps{
-                script{                
+                            
                         dockerImageAmazon = docker.build imageNameAmazon
-                }
+                
             }
         }
    }

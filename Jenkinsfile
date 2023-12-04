@@ -5,7 +5,7 @@ pipeline{
     
    }
    environment{
-        imageNameAmazon = "kiran023/amazon"
+        imageNameAmazon = "kiran023/amazon:latest"
         registryUrl = "registry.hub.docker.com"
         registryCreds = 'docker'
         dockerImageAmazon = ''
@@ -42,9 +42,9 @@ pipeline{
         }
         stage('dockerbuild'){
             steps{
-                            
+                script{            
                         dockerImageAmazon = docker.build imageNameAmazon
-                
+                }
             }
         }
    }

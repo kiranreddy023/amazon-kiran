@@ -9,5 +9,10 @@ pipeline{
             sh 'mvn clean test'
             }
         }
+        stage("sonar-check"){
+            steps{
+                echo "sonar analysis"
+            }
+        }
    }
 }

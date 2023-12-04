@@ -37,9 +37,7 @@ pipeline{
         }
         stage('dockerbuild'){
             steps{
-                script{            
-                        dockerImage = docker.build("kiran023/amazon:latest",".")
-                }
+                sh "docker build -t kiran023/amazon:latest"
             }
         }
    }

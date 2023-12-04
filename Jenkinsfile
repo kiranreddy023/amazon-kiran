@@ -38,7 +38,7 @@ pipeline{
         stage('dockerbuild'){
             steps{
                 script{            
-                        dockerImage = docker.build(kiran023/amazon:latest)
+                        dockerImage = docker.build("kiran023/amazon:latest")
                 }
             }
         }

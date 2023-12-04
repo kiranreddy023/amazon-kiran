@@ -19,6 +19,19 @@ pipeline{
                 sh 'mvn clean package -DskipTests=true'
             }
         }
-
+        stage ('Upload to jfrog') {
+            steps {
+               script {
+                def server = Artifactory.server 'kiranjfrog'
+                def uploadSpec = '''{
+                    "files": [{
+                    "pattern": "**/*.jar",
+                    "target": "amazon/"
+                        }]
+                    }'''
+                    server.upload(uploadSpec) 
+                }
+            }
+        }
    }
 }

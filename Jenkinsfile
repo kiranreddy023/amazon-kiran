@@ -42,7 +42,7 @@ pipeline{
 
                 // Build the Docker image
                 script {
-                    dockerImage = docker.build("kiran023/amazon:latest", ".")
+                    dockerImage = docker.build("kiran023/amazon:latest", "-f Amazon-Web/Dockerfile")
                 }
             }
         }

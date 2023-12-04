@@ -4,8 +4,10 @@ pipeline{
     maven "maven-3.6.3"
    }
    stages{
-    stage("mvn test"){
-        sh 'mvn clean test'
-    }
+        stage("mvn test"){
+            steps{
+            sh 'mvn clean test'
+            }
+        }
    }
 }

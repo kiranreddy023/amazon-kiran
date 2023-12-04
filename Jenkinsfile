@@ -49,5 +49,15 @@ pipeline{
                 }
             }
         }
+        stage('Push Docker Image') {
+            steps {
+                // Push the Docker image to a container registry
+                script {
+                    docker.withRegistry("https://${registryUrl}", registryCreds) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
    }
 }

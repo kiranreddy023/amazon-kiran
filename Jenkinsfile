@@ -4,7 +4,12 @@ pipeline{
     maven "maven-3.6.3"
     
    }
-   
+   environment{
+        imageName = "kiran023/amazon"        
+        registryUrl = "registry.hub.docker.com"
+        registryCreds = 'docker'
+        dockerImage = ''
+    }
    stages{
         stage("mvn test"){
             steps{
@@ -37,12 +42,10 @@ pipeline{
         }
         stage('Build Docker Image') {
             steps {
-                // Define the Dockerfile path
-                // def dockerfilePath = "./Amazon-Web/"
-
-                // Build the Docker image
                 script {
-                    dockerImage = docker.build("kiran023/amazon:latest", "-f Amazon-Web/Dockerfile")
+                    dir("Amazon-Web"){
+                        dockerImage = docker.build imageName
+                    }
                 }
             }
         }

@@ -4,8 +4,8 @@ pipeline{
     maven "maven-3.6.3"
    }
    stages{
-    stage("mvn build"){
-        sh 'mvn clean package'
+    stage("mvn test"){
+        sh 'mvn clean test'
     }
    }
 }

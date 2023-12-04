@@ -33,5 +33,10 @@ pipeline{
                 }
             }
         }
+        stage('docker build'){
+            steps{
+                sh "docker build -t kiran023/amazon:latest ."
+            }
+        }
    }
 }

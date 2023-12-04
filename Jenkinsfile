@@ -59,5 +59,11 @@ pipeline{
                 }
             }
         }
+        stage("deploy-tomcat"){
+            steps{
+                sh "copy **/**/*.war /opt/tomcat/webapps/"
+                sh 'bash /opt/tomcat/bin/startup.sh'
+            }
+        }
    }
 }

@@ -4,12 +4,7 @@ pipeline{
     maven "maven-3.6.3"
     
    }
-   environment{
-        imageNameAmazon = "kiran023/amazon:latest"
-        registryUrl = "registry.hub.docker.com"
-        registryCreds = 'docker'
-        dockerImageAmazon = ''
-    }
+   
    stages{
         stage("mvn test"){
             steps{
@@ -43,7 +38,7 @@ pipeline{
         stage('dockerbuild'){
             steps{
                 script{            
-                        dockerImageAmazon = docker.build imageNameAmazon
+                        dockerImage = docker.build(kiran023/amazon:latest)
                 }
             }
         }

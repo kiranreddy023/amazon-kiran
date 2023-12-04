@@ -22,7 +22,7 @@ pipeline{
         stage ('Upload to jfrog') {
             steps {
                script {
-                def server = Artifactory.server 'kiranjfrog'
+                def server = Artifactory.server 'jfrog'
                 def uploadSpec = '''{
                     "files": [{
                     "pattern": "**/*.jar",

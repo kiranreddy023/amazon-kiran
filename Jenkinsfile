@@ -14,5 +14,11 @@ pipeline{
                 echo "sonar analysis"
             }
         }
+        stage('mvn package'){
+            steps{
+                sh 'mvn clean package -DskipTests=true'
+            }
+        }
+
    }
 }

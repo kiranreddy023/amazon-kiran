@@ -59,13 +59,13 @@ pipeline{
                 }
             }
         }
-        '''stage("deploy-tomcat"){
+        /* stage("deploy-tomcat"){
             steps{
                 sh "rm -f /opt/tomcat/webapps/*.war"
                 sh "cp **/**/*.war /opt/tomcat/webapps/"
                 sh 'bash /opt/tomcat/bin/startup.sh'
             }
-        } '''
+        } */
         stage('deploy-docker'){
             steps{
                 sh 'docker stop amazonimage'

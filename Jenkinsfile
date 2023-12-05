@@ -18,7 +18,7 @@ pipeline{
         }
         stage("sonar-check"){
             steps{
-                echo "sonar analysis"
+                echo "sonar analysis test"
             }
         }
         stage('mvn package'){

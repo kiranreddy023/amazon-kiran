@@ -62,7 +62,7 @@ pipeline{
         
         stage('deploy-docker'){
             steps{
-                sh 'docker stop amazonimage'
+                sh 'docker kill amazonimage'
                 sh 'docker run -dp 9090:8080 --name amazonimage kiran023/amazon:latest'
             }
         }

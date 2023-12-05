@@ -68,7 +68,7 @@ pipeline{
         }
         stage('deploy-docker'){
             steps{
-                sh 'docker run -dp 9090:8080 kiran023/amazon:latest --name amazonimage'
+                sh 'docker run -dp 9090:8080 --name amazonimage $dockerImage'
             }
         }
    }

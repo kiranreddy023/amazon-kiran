@@ -61,8 +61,14 @@ pipeline{
         }
         stage("deploy-tomcat"){
             steps{
+                sh "rm -f /opt/tomcat/webapps/*.war"
                 sh "cp **/**/*.war /opt/tomcat/webapps/"
                 sh 'bash /opt/tomcat/bin/startup.sh'
+            }
+        }
+        stage('deploy-docker'){
+            steps{
+                sh 'docker run -dp 9090:8080 kiran023/amazon:latest'
             }
         }
    }

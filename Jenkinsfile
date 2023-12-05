@@ -59,16 +59,27 @@ pipeline{
                 }
             }
         }
-        stage("deploy-tomcat"){
+        '''stage("deploy-tomcat"){
             steps{
                 sh "rm -f /opt/tomcat/webapps/*.war"
                 sh "cp **/**/*.war /opt/tomcat/webapps/"
                 sh 'bash /opt/tomcat/bin/startup.sh'
             }
-        }
+        } '''
         stage('deploy-docker'){
             steps{
+                sh 'docker stop amazonimage'
                 sh 'docker run -dp 9090:8080 --name amazonimage kiran023/amazon:latest'
+            }
+        }
+        stage('docker status'){
+            steps{
+                sh 'docker ps'
+            }
+        }
+        stage("webpage ping"){
+            steps{
+                sh 'curl 52.180.147.40:9090/Amazon'
             }
         }
    }

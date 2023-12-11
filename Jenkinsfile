@@ -1,28 +1,81 @@
 pipeline{
-	agent any
-	tools{
-		maven "maven-3.6.3"
-	}
-	stages{
-		stage("mvn build"){
-			steps{
-				sh "mvn clean package -DskipTests=true"
-			}
-		}
-		stage("mvn test"){
+   agent any
+   tools{
+    maven "maven-3.6.3"
+    
+   }
+   environment{
+        imageName = "kiran023/amazon"        
+        registryUrl = "registry.hub.docker.com"
+        registryCreds = 'docker'
+        dockerImage = ''
+    }
+   stages{
+        stage("mvn test"){
             steps{
-                sh "mvn test"
+            sh 'mvn clean test'
             }
         }
-		stage("docker build"){
+        stage("sonar-check"){
             steps{
-                sh "docker build -t kiran023/amazon:v1 ."
+                echo "sonar analysis test"
             }
         }
-		stage("docker run"){
+        stage('mvn package'){
             steps{
-                sh "docker run -dp 9091:8080 --name amazon kiran023/amazon:v1"
+                sh 'mvn clean package -DskipTests=true'
             }
-        }				
-	}
+        }
+        stage ('Upload to jfrog') {
+            steps {
+               script {
+                def server = Artifactory.server 'jfrog'
+                def uploadSpec = '''{
+                    "files": [{
+                    "pattern": "**/*.war",
+                    "target": "amazon/"
+                        }]
+                    }'''
+                    server.upload(uploadSpec) 
+                }
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dir("Amazon-Web"){
+                        dockerImage = docker.build imageName
+                    }
+                }
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                // Push the Docker image to a container registry
+                script {
+                    docker.withRegistry("https://${registryUrl}", registryCreds) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+        
+        stage('deploy-docker'){
+            steps{
+                sh 'docker stop amazonimage'
+                sh 'docker rm amazonimage'
+                sh 'docker run -dp 9090:8080 --name amazonimage kiran023/amazon:latest'
+            }
+        }
+        stage('docker status'){
+            steps{
+                sh 'docker ps'
+            }
+        }
+        stage("webpage ping"){
+            steps{
+                sh 'curl 52.180.147.40:9090/Amazon'
+            }
+        }
+   }
 }
